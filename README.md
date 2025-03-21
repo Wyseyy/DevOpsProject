@@ -17,7 +17,11 @@ The CRUD application is for a record stores inventory that allows for users to a
 **Deployment:** The application will be hosted on a cloud platform, ensuring accessibility and reliability.
 
 <h2>Technology Stack</h2>
+
 - Backend: Ruby on Rails (API-based)
+
 - Frontend: React (for a modern, user-friendly interface)
+  
 - CI/CD: CircleCI (for automated testing and deployment)
+  
 - Deployment: AWS EC2 Ubuntu (with GitHub SSH integration)
