@@ -44,7 +44,7 @@ jobs:
       - run:
           name: deploy-application
           command: |
-            ssh -o StrictHostKeyChecking=no $EWYSE_CA@$EWYSE_CA_PUBLICIP \<<EOF
+            ssh -o StrictHostKeyChecking=no $DEVOPS_CA@$DEVOPS_CA_PUBLICIP \<<EOF
             export SERVER="$SERVER"
             export PRIVATE_KEY="$PRIVATE_KEY"
             rm -rf DevOpsProject/
