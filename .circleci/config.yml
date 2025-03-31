@@ -43,12 +43,4 @@ jobs:
     steps:
       - run:
           name: deploy-application
-          command: |
-            ssh -o StrictHostKeyChecking=no $DEVOPS_CA@$DEVOPS_CA_PUBLICIP \<<EOF
-            export SERVER="$SERVER"
-            export PRIVATE_KEY="$PRIVATE_KEY"
-            rm -rf DevOpsProject/
-            git clone https://github.com/WyseyyDevOpsProject.git
-            cd DevOpsProject
-            bash deploy.sh
-            EOF
+          command: ssh -o StrictHostKeyChecking=no $DEVOPS_CA@$DEVOPS_CA_PUBLICIP "export SERVER=\"$SERVER\"; export PRIVATE_KEY=\"$PRIVATE_KEY\"; rm -rf DevOpsProject/; git clone https://github.com/Wyseyy/DevOpsProject.git; bash DevOpsProject/deploy.sh"
