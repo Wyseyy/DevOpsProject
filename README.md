@@ -18,9 +18,9 @@ The CRUD application is for a record stores inventory that allows for users to a
 
 <h2>Technology Stack</h2>
 
-- Backend: Ruby on Rails (API-based)
+- Backend: Node.js
 
-- Frontend: React (for a modern, user-friendly interface)
+- Frontend: Embedded JavaScript (for a modern, user-friendly interface)
   
 - CI/CD: CircleCI (for automated testing and deployment)
   

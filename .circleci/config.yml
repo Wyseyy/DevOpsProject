@@ -44,11 +44,11 @@ jobs:
       - run:
           name: deploy-application
           command: |
-            ssh -o StrictHostKeyChecking=no $DEVOPS_CA@$DEVOPS_CA_PUBLICIP \<<EOF
+            ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS \<<EOF
             export SERVER="$SERVER"
             export PRIVATE_KEY="$PRIVATE_KEY"
             rm -rf DevOpsProject/
-            git clone https://github.com/Wyseyy/DevOpsProject.git
+            git clone https://github.com/adamjwCowan/DevOpsProject.git
             cd DevOpsProject
             bash deploy.sh
             EOF
