@@ -48,7 +48,7 @@ jobs:
             export SERVER="$SERVER"
             export PRIVATE_KEY="$PRIVATE_KEY"
             rm -rf DevOpsProject/
-            git clone https://github.com/adamjwCowan/DevOpsProject.git
+            git clone https://github.com/Wyseyy/DevOpsProject.git
             cd DevOpsProject
             bash deploy.sh
             EOF
