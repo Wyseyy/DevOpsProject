@@ -1,7 +1,53 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Records</title>
+    <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
+    <h2>Record Store Inventory</h2>
+    
+    <!-- Add Button -->
+    <a href="/views/Add.ejs" class="btn">Add New Record</a>
+    
+    <!-- Table to Display Records -->
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Record Name</th>
+          <th>Artist</th>
+          <th>In Stock</th>
+          <th>Release Year</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Scriptlet tag <% %> to execute javascript to allow for looping through records array-->
+        <% records.forEach(record => { %>
+          <tr>
+            <!-- Output tag <%= %> to print stored record details-->
+            <td><%= record.id %></td>
+            <td><%= record.name %></td>
+            <td><%= record.artist %></td>
+            <td><%= record.InStock ? "Yes" : "No" %></td>
+            <td><%= record.ReleaseYear %></td>
+            <td>
+              <!-- Edit Button -->
+              <a href="/views/Edit.ejs" class="btn btn-edit">Edit</a>
+              
+              <!-- Delete Button -->
+              <form action="/views/Delete.ejs" method="POST" style="display:inline;">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn btn-delete">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <!-- Closing Statement -->
+        <% }); %>
+      </tbody>
+    </table>
   </body>
 </html>
