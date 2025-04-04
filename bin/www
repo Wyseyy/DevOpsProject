@@ -96,7 +96,7 @@ var options = {
   http.createServer(function (req, res) {
   res.writeHead(301, { "Location": "https://" + req.headers['host'].replace(port,https_port) +
   req.url });
-  console.log("http requet, will go to >> ");
+  console.log("http request, will go to >> ");
   console.log("https://" + req.headers['host'].replace(port,https_port) + req.url );
   res.end();
   }).listen(port);
