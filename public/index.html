@@ -1,0 +1,77 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Record Store</title>
+</head>
+<body>
+  <h1>🎶 Record Store Manager</h1>
+
+  <h3>Add New Record</h3>
+  <input type="text" id="name" placeholder="Record Name" />
+  <input type="text" id="artist" placeholder="Artist" />
+  <input type="date" id="date" />
+  <label>
+    In Stock?
+    <input type="checkbox" id="stock" />
+  </label>
+  <button onclick="addRecord()">Add Record</button>
+
+  <h3>Records</h3>
+  <ul id="recordList"></ul>
+
+  <script>
+    const api = 'http://localhost:3000/api/records';
+
+    async function loadRecords() {
+      const res = await fetch(api);
+      const data = await res.json();
+      const list = document.getElementById('recordList');
+      list.innerHTML = '';
+      data.records.forEach((record) => {
+        const item = document.createElement('li');
+        item.innerHTML = `
+          ${record.record_name} by ${record.record_artist} (${record.release_date}) - ${
+          record.in_stock ? '✅ In Stock' : '❌ Out of Stock'
+        }
+          <button onclick="deleteRecord(${record.id})">Delete</button>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    async function addRecord() {
+      const name = document.getElementById('name').value;
+      const artist = document.getElementById('artist').value;
+      const date = document.getElementById('date').value;
+      const inStock = document.getElementById('stock').checked;
+
+      await fetch(api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          record_name: name,
+          record_artist: artist,
+          release_date: date,
+          in_stock: inStock,
+        }),
+      });
+
+      loadRecords();
+    }
+
+    async function deleteRecord(id) {
+      await fetch(`${api}?id=${id}`, {
+        method: 'DELETE',
+      });
+
+      loadRecords();
+    }
+
+    loadRecords();
+  </script>
+</body>
+</html>
