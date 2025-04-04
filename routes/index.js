@@ -9,23 +9,23 @@ const databaseRecords = () =>{
   ]
 }
 /* Home page (brings to read page). */
-router.get('/read', function(req, res, next) {
+routes.get('/read', function(req, res, next) {
   res.render('read', { title: "View records"});
 });
 
 /* Add page. */
-router.get('views/add', function(req, res, next) {
+routes.get('views/add', function(req, res, next) {
   res.render('add', { title: "Add a record", records });
 });
 
 /* Delete page. */
-router.get('views/delete', function(req, res, next) {
+routes.get('views/delete', function(req, res, next) {
   const recordId = req.params.id;
   console.log('Deleting record ID: ${recordId}');
 });
 
 /* Edit page. */
-router.get('views/edit', function(req, res, next) {
+routes.get('views/edit', function(req, res, next) {
   const recordId = req.params.id;
   res.render('edit', { title: "Edit records", recordId });
   res.redirect('/');
