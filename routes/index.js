@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+/* test data */
 const databaseRecords = () =>{
   return [
     { id: 1, name: "Channel Orange", artist: "Frank Ocean", releaseYear: 2012, InStock: false},
