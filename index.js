@@ -87,7 +87,7 @@ app.delete('/api/records', (req, res) => {
 });
 
 //lsitent to port on EC2 Instance
-app.listen(8843, '0.0.0.0', (err) => {
+app.listen(8443, '0.0.0.0', (err) => {
   console.log('LISTENING on port 8443');
 });
 
