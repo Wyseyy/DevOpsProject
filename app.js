@@ -38,7 +38,7 @@ const createTableSql = `
                 return res.status(500).send("Error fetching records");
             }
             // Render the EJS view with the records data
-            res.render("read", { records: rows });
+            res.render("index", { records: rows });
         });
     });
 
