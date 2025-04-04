@@ -10,7 +10,7 @@ const databaseRecords = () =>{
 }
 /* Home page (brings to read page). */
 router.get('/', function(req, res, next) {
-  const records = databaseRecords();//fetch records from database
+  const records = records();//fetch records from database
   res.render('index', { title: "DevOps Projects", records });
 });
 
