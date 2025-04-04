@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,7 +40,7 @@
         list.appendChild(item);
       });
     }
-
+    //add record
     async function addRecord() {
       const name = document.getElementById('name').value;
       const artist = document.getElementById('artist').value;
@@ -62,7 +60,8 @@
 
       loadRecords();
     }
-
+    
+    //delete record
     async function deleteRecord(id) {
       await fetch(`${api}?id=${id}`, {
         method: 'DELETE',

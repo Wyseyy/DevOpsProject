@@ -1,9 +1,11 @@
+//connects to connect.js containing records table from mydata.db
 import { DB } from './connect.js';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
 
 const app = express();
 app.use(cors());
@@ -84,8 +86,9 @@ app.delete('/api/records', (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('LISTENING on port 3000');
+//lsitent to port on EC2 Instance
+app.listen(8843, '0.0.0.0', (err) => {
+  console.log('LISTENING on port 8443');
 });
 
 // var express = require('express');
