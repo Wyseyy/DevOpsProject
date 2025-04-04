@@ -67,7 +67,9 @@
       console.error('Failed to add record:', error);
       alert('Failed to add record: ' + error.message);
     }
+    loadRecords();
   }
+  
     
     //delete record
     async function deleteRecord(id) {
