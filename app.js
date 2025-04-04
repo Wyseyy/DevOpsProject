@@ -43,6 +43,7 @@ const createTableSql = `
                 return res.status(500).send("Error fetching records");
             }
             res.render("index", { records: rows }); // Pass records to EJS template
+            res.send("index", { records: rows });
         });
     });
 
