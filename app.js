@@ -10,6 +10,7 @@ var app = express();
 
 // filename - index.js 
 const sqlite3 = require('sqlite3');
+const { runInNewContext } = require('vm');
 
 // Connecting Database
 let db = new sqlite3.Database(":memory:" , (err) => {
@@ -65,6 +66,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var indexRouter = require('./routes/index')
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
