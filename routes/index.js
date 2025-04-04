@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-<<<<<<< HEAD
 // filename - index.js 
 const sqlite3 = require('sqlite3');
 
@@ -44,9 +43,6 @@ db.run(createTableSql, (err) => {
     console.log('Table created successfully');
 });
 
-=======
-/* test data */
->>>>>>> 599d2b43215b60d5e34ea4215ab897a507d85e47
 const databaseRecords = () =>{
   return [
     { id: 1, name: "Channel Orange", artist: "Frank Ocean", releaseYear: 2012, InStock: false},
