@@ -8,10 +8,27 @@ const databaseRecords = () =>{
     {id: 3, name: "Igor", artist: "Tyler The Creator", releaseYear: 2019, inStock: true},
   ]
 }
-/* GET home page. */
+/* Home page (brings to read page). */
 router.get('/', function(req, res, next) {
   const records = databaseRecords();//fetch records from database
   res.render('index', { title: "DevOps Projects", records });
+});
+
+/* Add page. */
+router.get('/add', function(req, res, next) {
+  res.render('add', { title: "Add a record", records });
+});
+
+/* Delete page. */
+router.get('/delete', function(req, res, next) {
+  const recordId = req.params.id;
+  console.log('Deleting record ID: ${recordId}');
+});
+
+/* Edit page. */
+router.get('/edit', function(req, res, next) {
+  const recordId = req.params.id;
+  res.render('edit', { title: "Edit records", recordId });
 });
 
 
