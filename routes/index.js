@@ -15,18 +15,18 @@ router.get('/', function(req, res, next) {
 });
 
 /* Add page. */
-router.get('/add', function(req, res, next) {
+router.get('views/add', function(req, res, next) {
   res.render('add', { title: "Add a record", records });
 });
 
 /* Delete page. */
-router.get('/delete', function(req, res, next) {
+router.get('views/delete', function(req, res, next) {
   const recordId = req.params.id;
   console.log('Deleting record ID: ${recordId}');
 });
 
 /* Edit page. */
-router.get('/edit', function(req, res, next) {
+router.get('views/edit', function(req, res, next) {
   const recordId = req.params.id;
   res.render('edit', { title: "Edit records", recordId });
 });
