@@ -26,6 +26,10 @@ app.get('/', (req, res) => {
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => {
+  res.status(200).send('Record store service is online');
+});
+
 // GET all records
 app.get('/api/records', (req, res) => {
   res.set('content-type', 'application/json');
