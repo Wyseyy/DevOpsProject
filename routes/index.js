@@ -11,7 +11,7 @@ const databaseRecords = () =>{
 /* Home page (brings to read page). */
 router.get('/', function(req, res, next) {
   const records = databaseRecords();//fetch records from database
-  res.render('index', { title: "View records", records });
+  res.render('read', { title: "View records", records });
 });
 
 /* Add page. */
