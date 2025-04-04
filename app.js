@@ -23,11 +23,6 @@ let db = new sqlite3.Database(":memory:" , (err) => {
     }
 })
 
-
-app.get("/" , (req , res) => {
-    res.send("Database Creation successful");
-})
-
 const createTableSql = `
     CREATE TABLE IF NOT EXISTS records (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,8 +37,8 @@ const createTableSql = `
             if (err) {
                 return res.status(500).send("Error fetching records");
             }
-            res.render("index", { records: rows }); // Pass records to EJS template
-            res.send("index", { records: rows });
+            // Render the EJS view with the records data
+            res.render("index", { records: rows });
         });
     });
 
