@@ -1,124 +1,152 @@
-<script>
-  let currentEditId = null;
-  const api = 'http://52.1.74.125:8443/api/records';
+<!DOCTYPE html>
+<html lang="en">
 
-  async function loadRecords() {
-    const res = await fetch(api);
-    const data = await res.json();
-    const list = document.getElementById('recordList');
-    list.innerHTML = '';
-    data.records.forEach((record) => {
-      const item = document.createElement('li');
-      item.innerHTML = `
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Record Store</title>
+</head>
+
+<body>
+  <h1>🎶 Record Store Manager</h1>
+
+  <h3>Add / Edit Record</h3>
+  <input type="text" id="name" placeholder="Record Name" />
+  <input type="text" id="artist" placeholder="Artist" />
+  <input type="date" id="date" />
+  <label>
+    In Stock?
+    <input type="checkbox" id="stock" />
+  </label>
+  <button id="submitBtn" onclick="handleForm()">Add Record</button>
+
+  <h3>Records</h3>
+  <ul id="recordList"></ul>
+
+  <script>
+    let currentEditId = null;
+    const api = 'http://52.1.74.125:8443/api/records';
+
+    async function loadRecords() {
+      const res = await fetch(api);
+      const data = await res.json();
+      const list = document.getElementById('recordList');
+      list.innerHTML = '';
+      data.records.forEach((record) => {
+        const item = document.createElement('li');
+        item.innerHTML = `
         ${record.record_name} by ${record.record_artist} (${record.release_date}) - ${record.in_stock ? '✅ In Stock' : '❌ Out of Stock'}
         <button onclick="deleteRecord(${record.id})">Delete</button>
         <button onclick="populateForm(${record.id})">Edit</button>
       `;
-      list.appendChild(item);
-    });
-  }
-
-  async function handleForm() {
-    if (currentEditId) {
-      await updateRecord(currentEditId);
-      currentEditId = null;
-      document.getElementById('submitBtn').innerText = 'Add Record';
-    } else {
-      await addRecord();
-    }
-    clearForm();
-    loadRecords();
-  }
-
-  async function addRecord() {
-    try {
-      const name = document.getElementById('name').value;
-      const artist = document.getElementById('artist').value;
-      const date = document.getElementById('date').value;
-      const inStock = document.getElementById('stock').checked;
-
-      const response = await fetch(api, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          record_name: name,
-          record_artist: artist,
-          release_date: date,
-          in_stock: inStock
-        })
+        list.appendChild(item);
       });
-
-      if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
-
-      const data = await response.json();
-      alert('Record added successfully: ' + data.message);
-    } catch (error) {
-      console.error('Failed to add record:', error);
-      alert('Failed to add record: ' + error.message);
     }
-  }
 
-  async function updateRecord(id) {
-    try {
-      const name = document.getElementById('name').value;
-      const artist = document.getElementById('artist').value;
-      const date = document.getElementById('date').value;
-      const inStock = document.getElementById('stock').checked;
-
-      const response = await fetch(`${api}/?id=${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          record_name: name,
-          record_artist: artist,
-          release_date: date,
-          in_stock: inStock
-        })
-      });
-
-      if (!response.ok) throw new Error(`Failed to update. Status ${response.status}`);
-
-      alert('Record updated!');
-    } catch (error) {
-      console.error('Update error:', error);
-      alert('Failed to update record.');
-    }
-  }
-
-  function populateForm(id) {
-    fetch(`${api}/?id=${id}`)
-      .then(res => res.json())
-      .then(data => {
-        const record = data.record;
-        document.getElementById('name').value = record.record_name;
-        document.getElementById('artist').value = record.record_artist;
-        document.getElementById('date').value = record.release_date;
-        document.getElementById('stock').checked = record.in_stock;
-        currentEditId = record.id;
-        document.getElementById('submitBtn').innerText = 'Update Record';
-      })
-      .catch(err => {
-        console.error('Failed to load record for editing:', err);
-        alert('Could not load record for editing.');
-      });
-  }
-
-  async function deleteRecord(id) {
-    try {
-      await fetch(`${api}/?id=${id}`, { method: 'DELETE' });
+    async function handleForm() {
+      if (currentEditId) {
+        await updateRecord(currentEditId);
+        currentEditId = null;
+        document.getElementById('submitBtn').innerText = 'Add Record';
+      } else {
+        await addRecord();
+      }
+      clearForm();
       loadRecords();
-    } catch (error) {
-      console.error('Delete error:', error);
-      alert('Failed to delete record.');
     }
-  }
 
-  function clearForm() {
-    document.getElementById('name').value = '';
-    document.getElementById('artist').value = '';
-    document.getElementById('date').value = '';
-    document.getElementById('stock').checked = false;
-  }
+    async function addRecord() {
+      try {
+        const name = document.getElementById('name').value;
+        const artist = document.getElementById('artist').value;
+        const date = document.getElementById('date').value;
+        const inStock = document.getElementById('stock').checked;
 
-  loadRecords();
-</script>
+        const response = await fetch(api, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            record_name: name,
+            record_artist: artist,
+            release_date: date,
+            in_stock: inStock
+          })
+        });
+
+        if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
+
+        const data = await response.json();
+        alert('Record added successfully: ' + data.message);
+      } catch (error) {
+        console.error('Failed to add record:', error);
+        alert('Failed to add record: ' + error.message);
+      }
+    }
+
+    async function updateRecord(id) {
+      try {
+        const name = document.getElementById('name').value;
+        const artist = document.getElementById('artist').value;
+        const date = document.getElementById('date').value;
+        const inStock = document.getElementById('stock').checked;
+
+        const response = await fetch(`${api}/?id=${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            record_name: name,
+            record_artist: artist,
+            release_date: date,
+            in_stock: inStock
+          })
+        });
+
+        if (!response.ok) throw new Error(`Failed to update. Status ${response.status}`);
+
+        alert('Record updated!');
+      } catch (error) {
+        console.error('Update error:', error);
+        alert('Failed to update record.');
+      }
+    }
+
+    function populateForm(id) {
+      fetch(`${api}/?id=${id}`)
+        .then(res => res.json())
+        .then(data => {
+          const record = data.record;
+          document.getElementById('name').value = record.record_name;
+          document.getElementById('artist').value = record.record_artist;
+          document.getElementById('date').value = record.release_date;
+          document.getElementById('stock').checked = record.in_stock;
+          currentEditId = record.id;
+          document.getElementById('submitBtn').innerText = 'Update Record';
+        })
+        .catch(err => {
+          console.error('Failed to load record for editing:', err);
+          alert('Could not load record for editing.');
+        });
+    }
+
+    async function deleteRecord(id) {
+      try {
+        await fetch(`${api}/?id=${id}`, { method: 'DELETE' });
+        loadRecords();
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Failed to delete record.');
+      }
+    }
+
+    function clearForm() {
+      document.getElementById('name').value = '';
+      document.getElementById('artist').value = '';
+      document.getElementById('date').value = '';
+      document.getElementById('stock').checked = false;
+    }
+
+    loadRecords();
+  </script>
+</body>
+
+</html>
