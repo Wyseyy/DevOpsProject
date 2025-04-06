@@ -22,7 +22,7 @@
   <ul id="recordList"></ul>
 
   <script>
-    const api = 'http://52.1.74.125:8443/api';
+    const api = 'http://52.1.74.125:8443/api/records';
 
     async function loadRecords() {
       const res = await fetch(api);
@@ -43,10 +43,10 @@
     //add record
     async function addRecord() {
     try {
-      const name = document.getElementById('record_name').value;
-      const artist = document.getElementById('record_artist').value;
-      const date = document.getElementById('release_date').value;
-      const inStock = document.getElementById('in_stock').checked;
+      const name = document.getElementById('name').value;
+      const artist = document.getElementById('artist').value;
+      const date = document.getElementById('date').value;
+      const inStock = document.getElementById('stock').checked;
 
       const response = await fetch(api, {
         method: 'POST',
