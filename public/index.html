@@ -11,7 +11,7 @@
   <h1>🎶 Record Store Manager</h1>
 
   <h3>Add / Edit Record</h3>
-  <input type="text" id="record_name" placeholder="Record Name" />
+  <input type="text" id="name" placeholder="Record Name" />
   <input type="text" id="artist" placeholder="Artist" />
   <input type="date" id="date" />
   <label>
@@ -57,7 +57,7 @@
 
     async function addRecord() {
       try {
-        const name = document.getElementById('record_name').value;
+        const name = document.getElementById('name').value;
         const artist = document.getElementById('artist').value;
         const date = document.getElementById('date').value;
         const inStock = document.getElementById('stock').checked;
@@ -66,7 +66,7 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            record_name: record_name,
+            record_name: name,
             record_artist: artist,
             release_date: date,
             in_stock: inStock
@@ -85,7 +85,7 @@
 
     async function updateRecord(id) {
       try {
-        const name = document.getElementById('record_name').value;
+        const name = document.getElementById('name').value;
         const artist = document.getElementById('artist').value;
         const date = document.getElementById('date').value;
         const inStock = document.getElementById('stock').checked;
@@ -94,7 +94,7 @@
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            record_name: record_name,
+            record_name: name,
             record_artist: artist,
             release_date: date,
             in_stock: inStock
@@ -115,7 +115,7 @@
         .then(res => res.json())
         .then(data => {
           const record = data.record;
-          document.getElementById('record_name').value = record.record_name;
+          document.getElementById('name').value = record.record_name;
           document.getElementById('artist').value = record.record_artist;
           document.getElementById('date').value = record.release_date;
           document.getElementById('stock').checked = record.in_stock;
@@ -139,7 +139,7 @@
     }
 
     function clearForm() {
-      document.getElementById('record_name').value = '';
+      document.getElementById('name').value = '';
       document.getElementById('artist').value = '';
       document.getElementById('date').value = '';
       document.getElementById('stock').checked = false;
