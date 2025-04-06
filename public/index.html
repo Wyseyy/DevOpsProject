@@ -77,7 +77,7 @@
     }
 
     function populateForm(id) {
-      fetch(`${api}/records/${id}`)
+      fetch(`${api}/${id}`)
         .then(res => res.json())
         .then(data => {
           const record = data.record;
