@@ -89,6 +89,23 @@ app.put('/api/records/:id', (req, res) => {
   });
 });
 
+// GET a single record by id
+app.get('/api/records/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = 'SELECT * FROM records WHERE id = ?';
+  DB.get(sql, [id], (err, row) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send({ error: err.message });
+    }
+    if (!row) {
+      return res.status(404).send({ message: "Record not found." });
+    }
+    res.send({ record: row });
+  });
+});
+
+
 // DELETE a record
 app.delete('/api/records', (req, res) => {
   const sql = 'DELETE FROM records WHERE id=?';

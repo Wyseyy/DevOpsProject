@@ -101,24 +101,6 @@
         });
     }
 
-    function populateForm(id) {
-      fetch(`${api}/?id=${id}`)
-        .then(res => res.json())
-        .then(data => {
-          const record = data.record;
-          document.getElementById('name').value = record.record_name;
-          document.getElementById('artist').value = record.record_artist;
-          document.getElementById('date').value = record.release_date;
-          document.getElementById('stock').checked = record.in_stock;
-          currentEditId = record.id;
-          document.getElementById('submitBtn').innerText = 'Update Record';
-        })
-        .catch(err => {
-          console.error('Failed to load record for editing:', err);
-          alert('Could not load record for editing.');
-        });
-    }
-
     async function deleteRecord(id) {
       try {
         await fetch(`${api}?id=${id}`, { method: 'DELETE' });
