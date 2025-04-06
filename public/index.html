@@ -77,7 +77,7 @@
     }
 
     function populateForm(id) {
-      fetch(`${api}${id}`)
+      fetch(`${api}/records/${id}`)
         .then(res => res.json())
         .then(data => {
           const record = data.record;
@@ -97,7 +97,7 @@
 
     //delete record
     async function deleteRecord(id) {
-      await fetch(`${api}?id=${id}`, {
+      await fetch(`${api}/?id=${id}`, {
         method: 'DELETE',
       });
 
