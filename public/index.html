@@ -25,7 +25,7 @@
 
   <script>
     let currentEditId = null;
-    const api = 'http://52.1.74.125:8443/api/records';
+    const api = 'https://52.1.74.125:8443/api/records';
 
     async function loadRecords() {
       const res = await fetch(api);
@@ -90,7 +90,7 @@
         const date = document.getElementById('date').value;
         const inStock = document.getElementById('stock').checked;
 
-        const response = await fetch(`${api}/?id=${id}`, {
+        const response = await fetch(`${api}/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
