@@ -83,31 +83,22 @@
       }
     }
 
-    async function updateRecord(id) {
-      try {
-        const name = document.getElementById('name').value;
-        const artist = document.getElementById('artist').value;
-        const date = document.getElementById('date').value;
-        const inStock = document.getElementById('stock').checked;
-
-        const response = await fetch(`${api}/${id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            record_name: name,
-            record_artist: artist,
-            release_date: date,
-            in_stock: inStock
-          })
+    function populateForm(id) {
+      fetch(`${api}/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          const record = data.record;
+          document.getElementById('name').value = record.record_name;
+          document.getElementById('artist').value = record.record_artist;
+          document.getElementById('date').value = record.release_date;
+          document.getElementById('stock').checked = record.in_stock;
+          currentEditId = record.id;
+          document.getElementById('submitBtn').innerText = 'Update Record';
+        })
+        .catch(err => {
+          console.error('Failed to load record for editing:', err);
+          alert('Could not load record for editing.');
         });
-
-        if (!response.ok) throw new Error(`Failed to update. Status ${response.status}`);
-
-        alert('Record updated!');
-      } catch (error) {
-        console.error('Update error:', error);
-        alert('Failed to update record.');
-      }
     }
 
     function populateForm(id) {
@@ -130,7 +121,7 @@
 
     async function deleteRecord(id) {
       try {
-        await fetch(`${api}/?id=${id}`, { method: 'DELETE' });
+        await fetch(`${api}?id=${id}`, { method: 'DELETE' });
         loadRecords();
       } catch (error) {
         console.error('Delete error:', error);
