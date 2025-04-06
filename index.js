@@ -64,6 +64,31 @@ app.post('/api/records', (req, res) => {
   }
 });
 
+// UPDATE an existing record
+app.put('/api/records/:id', (req, res) => {
+  const id = req.params.id;
+  const { record_name, record_artist, release_date, in_stock } = req.body;
+
+  const sql = `
+    UPDATE records
+    SET record_name = ?, record_artist = ?, release_date = ?, in_stock = ?
+    WHERE id = ?
+  `;
+
+  DB.run(sql, [record_name, record_artist, release_date, in_stock, id], function (err) {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send({ error: err.message });
+    }
+
+    if (this.changes === 0) {
+      return res.status(404).send({ message: "Record not found." });
+    }
+
+    res.status(200).send({ message: `Record ${id} updated successfully.` });
+  });
+});
+
 // DELETE a record
 app.delete('/api/records', (req, res) => {
   const sql = 'DELETE FROM records WHERE id=?';

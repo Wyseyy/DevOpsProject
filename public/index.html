@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Record Store</title>
 </head>
+
 <body>
   <h1>🎶 Record Store Manager</h1>
 
@@ -22,6 +24,7 @@
   <ul id="recordList"></ul>
 
   <script>
+    let currentEditId = null;
     const api = 'http://52.1.74.125:8443/api/records';
 
     async function loadRecords() {
@@ -32,47 +35,66 @@
       data.records.forEach((record) => {
         const item = document.createElement('li');
         item.innerHTML = `
-          ${record.record_name} by ${record.record_artist} (${record.release_date}) - ${
-          record.in_stock ? '✅ In Stock' : '❌ Out of Stock'
-        }
-          <button onclick="deleteRecord(${record.id})">Delete</button>
-        `;
+    ${record.record_name} by ${record.record_artist} (${record.release_date}) - ${record.in_stock ? '✅ In Stock' : '❌ Out of Stock'
+          }
+    <button onclick="deleteRecord(${record.id})">Delete</button>
+    <button onclick="populateForm(${record.id})">Edit</button>
+  `;
         list.appendChild(item);
       });
     }
+
     //add record
     async function addRecord() {
-    try {
-      const name = document.getElementById('name').value;
-      const artist = document.getElementById('artist').value;
-      const date = document.getElementById('date').value;
-      const inStock = document.getElementById('stock').checked;
+      try {
+        const name = document.getElementById('name').value;
+        const artist = document.getElementById('artist').value;
+        const date = document.getElementById('date').value;
+        const inStock = document.getElementById('stock').checked;
 
-      const response = await fetch(api, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          record_name: name,
-          record_artist: artist,
-          release_date: date,
-          in_stock: inStock
-        })
-      });
+        const response = await fetch(api, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            record_name: name,
+            record_artist: artist,
+            release_date: date,
+            in_stock: inStock
+          })
+        });
 
 
-      if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
-      
-      const data = await response.json();
-      alert('Record added successfully: ' + data.message);
+        if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
+
+        const data = await response.json();
+        alert('Record added successfully: ' + data.message);
+        loadRecords();
+      } catch (error) {
+        console.error('Failed to add record:', error);
+        alert('Failed to add record: ' + error.message);
+      }
       loadRecords();
-    } catch (error) {
-      console.error('Failed to add record:', error);
-      alert('Failed to add record: ' + error.message);
     }
-    loadRecords();
-  }
-  
-    
+
+    function populateForm(id) {
+      fetch(`${api}${id}`)
+        .then(res => res.json())
+        .then(data => {
+          const record = data.record;
+          document.getElementById('name').value = record.record_name;
+          document.getElementById('artist').value = record.record_artist;
+          document.getElementById('date').value = record.release_date;
+          document.getElementById('stock').checked = record.in_stock;
+          currentEditId = record.id;
+        })
+        .catch(err => {
+          console.error('Failed to load record for editing:', err);
+          alert('Could not load record for editing.');
+        });
+    }
+
+
+
     //delete record
     async function deleteRecord(id) {
       await fetch(`${api}?id=${id}`, {
@@ -85,4 +107,5 @@
     loadRecords();
   </script>
 </body>
+
 </html>
