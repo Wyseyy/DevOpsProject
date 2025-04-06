@@ -55,6 +55,7 @@
       loadRecords();
     }
 
+
     async function addRecord() {
       try {
         const name = document.getElementById('name').value;
@@ -99,6 +100,34 @@
           console.error('Failed to load record for editing:', err);
           alert('Could not load record for editing.');
         });
+    }
+
+    async function updateRecord(id) {
+      try {
+        const name = document.getElementById('name').value;
+        const artist = document.getElementById('artist').value;
+        const date = document.getElementById('date').value;
+        const inStock = document.getElementById('stock').checked;
+
+        const response = await fetch(`${api}/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            record_name: name,
+            record_artist: artist,
+            release_date: date,
+            in_stock: inStock
+          })
+        });
+
+        if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
+
+        const data = await response.json();
+        alert('Record updated successfully: ' + data.message);
+      } catch (error) {
+        console.error('Failed to update record:', error);
+        alert('Failed to update record: ' + error.message);
+      }
     }
 
     async function deleteRecord(id) {
