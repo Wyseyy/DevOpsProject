@@ -65,7 +65,7 @@
       const date = document.getElementById('date').value;
       const inStock = document.getElementById('stock').checked;
 
-      const response = await fetch(`${api}?id=${id}`, {
+      const response = await fetch(`${api}/?id=${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -86,7 +86,7 @@
   }
 
   function populateForm(id) {
-    fetch(`${api}?id=${id}`)
+    fetch(`${api}/?id=${id}`)
       .then(res => res.json())
       .then(data => {
         const record = data.record;
@@ -105,7 +105,7 @@
 
   async function deleteRecord(id) {
     try {
-      await fetch(`${api}?id=${id}`, { method: 'DELETE' });
+      await fetch(`${api}/?id=${id}`, { method: 'DELETE' });
       loadRecords();
     } catch (error) {
       console.error('Delete error:', error);
