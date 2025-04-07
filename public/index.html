@@ -132,7 +132,7 @@
 
     async function deleteRecord(id) {
       try {
-        await fetch(`${api}?id=${id}`, { method: 'DELETE' });
+        await fetch(`${api}/${id}`, { method: 'DELETE' });
         loadRecords();
       } catch (error) {
         console.error('Delete error:', error);

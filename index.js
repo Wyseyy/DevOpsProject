@@ -1,11 +1,10 @@
 //connects to connect.js containing records table from mydata.db
-import { DB } from './connect.js';
+import { DB } from './dbConnection.js';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
 
 const app = express();
 app.use(cors());
@@ -128,39 +127,3 @@ app.delete('/api/records', (req, res) => {
 app.listen(8443, '0.0.0.0', (err) => {
   console.log('LISTENING on port 8443');
 });
-
-// var express = require('express');
-// var router = express.Router();
-
-// const databaseRecords = () =>{
-//   return [
-//     { id: 1, name: "Channel Orange", artist: "Frank Ocean", releaseYear: 2012, inStock: false},
-//     { id: 2, name: "Brand New Eyes", artist: "Paramore", releaseYear: 2009, inStock: true},
-//     {id: 3, name: "Igor", artist: "Tyler The Creator", releaseYear: 2019, inStock: true},
-//   ]
-// }
-// /* Home page (brings to read page). */
-// router.get('/', function(req, res, next) {
-//   const records = records();//fetch records from database
-//   res.render('index', { title: "DevOps Projects", records });
-// });
-
-// /* Add page. */
-// router.get('views/add', function(req, res, next) {
-//   res.render('add', { title: "Add a record", records });
-// });
-
-// /* Delete page. */
-// router.get('views/delete', function(req, res, next) {
-//   const recordId = req.params.id;
-//   console.log('Deleting record ID: ${recordId}');
-// });
-
-// /* Edit page. */
-// router.get('views/edit', function(req, res, next) {
-//   const recordId = req.params.id;
-//   res.render('edit', { title: "Edit records", recordId });
-// });
-
-
-// module.exports = router;
