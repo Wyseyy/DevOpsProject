@@ -123,7 +123,7 @@ app.delete('/api/records', (req, res) => {
   }
 });
 
-//listen to port on Ubuntu EC2 Instance
+//listen to port on Ubuntu EC2 Instance.
 app.listen(8443, '0.0.0.0', (err) => {
   console.log('LISTENING on port 8443');
 });
