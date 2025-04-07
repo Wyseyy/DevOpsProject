@@ -1,5 +1,5 @@
 //connects to connect.js containing records table from mydata.db
-import { DB } from './dbConnection.js';
+import { DB } from './connect.js';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
